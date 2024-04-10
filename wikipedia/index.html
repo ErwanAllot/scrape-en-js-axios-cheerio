@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraper le h1 de Wikipédia</title>
+</head>
+<body>
+    <h1 id="h1Content">Contenu du h1</h1>
+
+    <script>
+        // Vous pouvez appeler votre serveur Node.js ici via une requête AJAX
+        fetch('http://localhost:3000')
+            .then(response => response.text())
+            .then(data => {
+                // Mettre à jour le contenu du h1 avec celui récupéré depuis le serveur
+                document.getElementById('h1Content').innerText = data;
+            })
+            .catch(error => console.error('Une erreur est survenue lors de la requête :', error));
+    </script>
+</body>
+</html>

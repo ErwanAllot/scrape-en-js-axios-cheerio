@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrapper</title>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script>
+        // URL du site à scrapper
+        const url = 'https://www.erwanallot.com/';
+
+        // URL du serveur CORS proxy
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
+        // Requête vers le serveur CORS proxy avec l'URL du site cible
+        fetch(proxyUrl + url)
+            .then(response => response.text())
+            .then(data => {
+                // Affichage du contenu récupéré dans la div
+                document.getElementById('content').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Une erreur est survenue lors de la requête :', error);
+            });
+    </script>
+</body>
+</html>

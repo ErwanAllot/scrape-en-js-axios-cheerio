@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Example</title>
+</head>
+<body>
+    <h1 id="pageTitle">Contenu du h1:</h1>
+    
+    <script>
+        // Fonction pour mettre à jour le contenu du h1
+        function updatePageTitle(title) {
+            document.getElementById('pageTitle').innerText = title;
+        }
+
+        // URL du site à récupérer
+        const url = 'https://www.erwanallot.com/';
+
+        // Utilisation de fetch pour récupérer le contenu du site
+        fetch(url)
+            .then(response => {
+                // Vérification de la réponse HTTP
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des données.');
+                }
+                // Renvoie le corps de la réponse en tant que texte
+                return response.text();
+            })
+            .then(data => {
+                // Recherche du contenu du h1 dans la réponse
+                const parser = new DOMParser();
+                const htmlDocument = parser.parseFromString(data, 'text/html');
+                const pageTitle = htmlDocument.querySelector('h1');
+
+                // Vérification si le h1 a été trouvé
+                if (pageTitle) {
+                    // Mise à jour du titre de la page avec le contenu du h1
+                    updatePageTitle(pageTitle.innerText);
+                } else {
+                    throw new Error('Le h1 n\'a pas été trouvé dans la réponse.');
+                }
+            })
+            .catch(error => {
+                // Gestion des erreurs
+                console.error('Une erreur est survenue lors de la requête :', error);
+            });
+    </script>
+</body>
+</html>

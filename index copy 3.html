@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrapper le contenu d'une page web</title>
+    <!-- Inclure jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        // Attendre que le DOM soit chargé
+        $(document).ready(function() {
+            // Utiliser jQuery pour récupérer le contenu du h1
+            var h1Content = $('h1').text();
+            console.log("Contenu du h1:", h1Content);
+        });
+    </script>
+</body>
+</html>

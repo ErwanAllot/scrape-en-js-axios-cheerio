@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrapper le contenu du h1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1 id="contenuH1"></h1>
+
+    <script>
+        // Attendre que le DOM soit prêt
+        $(document).ready(function(){
+            // Effectuer une requête AJAX pour récupérer le contenu du h1
+            $.ajax({
+                url: 'https://www.erwanallot.com/',
+                type: 'GET',
+                success: function(data) {
+                    // Extraire le contenu du h1
+                    var contenuH1 = $(data).find('h1').text();
+                    // Afficher le contenu du h1 dans la console
+                    console.log("Contenu du h1:", contenuH1);
+                    // Afficher le contenu du h1 dans la balise h1 de cette page
+                    $('#contenuH1').text(contenuH1);
+                },
+                error: function() {
+                    console.error("Une erreur est survenue lors de la requête vers erwanallot.com.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

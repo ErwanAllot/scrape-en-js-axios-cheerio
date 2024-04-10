@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraper le h1 de Wikipédia</title>
+</head>
+<body>
+    <h1 id="h1Content">Contenu du h1</h1>
+
+    <script>
+        // Fonction pour récupérer le contenu du h1 de Wikipédia
+        function fetchWikipediaH1() {
+            // URL de l'API MediaWiki pour obtenir le contenu de la page principale de Wikipédia
+            var apiUrl = 'https://fr.wikipedia.org/w/api.php?action=parse&page=Wikipédia:Accueil_principal&format=json&prop=wikitext';
+
+            // Effectuer une requête GET vers l'API MediaWiki
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Extraire le contenu du h1 de la réponse JSON
+                    var h1Content = data.parse.wikitext['*'].match(/<h1[^>]*>(.*?)<\/h1>/)[1];
+                    // Afficher le contenu du h1
+                    document.getElementById('h1Content').innerText = h1Content;
+                })
+                .catch(error => console.error('Une erreur est survenue lors de la requête :', error));
+        }
+
+        // Appeler la fonction pour récupérer le contenu du h1 de Wikipédia
+        fetchWikipediaH1();
+    </script>
+</body>
+</html>

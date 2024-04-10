@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraper le h1 de Wikipédia</title>
+</head>
+<body>
+    <h1 id="h1Content">Contenu du h1</h1>
+
+    <script>
+        fetch('https://cors-anywhere.herokuapp.com/https://fr.wikipedia.org/wiki/Wikip%C3%A9dia:Accueil_principal')
+            .then(response => response.text())
+            .then(html => {
+                // Créer un élément div pour stocker le contenu HTML
+                var div = document.createElement('div');
+                // Injecter le HTML récupéré dans l'élément div
+                div.innerHTML = html;
+                // Extraire le contenu du h1 de l'élément div
+                var h1Content = div.querySelector('h1').textContent;
+                // Afficher le contenu du h1
+                document.getElementById('h1Content').innerText = h1Content;
+            })
+            .catch(error => console.error('Une erreur est survenue lors de la requête :', error));
+    </script>
+</body>
+</html>

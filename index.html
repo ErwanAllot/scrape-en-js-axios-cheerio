@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraper le h1 de Wikipédia</title>
+</head>
+<body>
+    <h1 id="h1Content">Contenu du h1</h1>
+
+    <script>
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+    // URL de la page Wikipédia à scraper
+    const url = 'https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal';
+
+    // Effectuer une requête GET vers l'URL
+    axios.get(url)
+        .then(response => {
+            // Charger le contenu HTML de la page
+            const html = response.data;
+
+            // Utiliser Cheerio pour analyser le HTML
+            const $ = cheerio.load(html);
+
+            // Récupérer le contenu du h1
+            const h1Content = $('h1').text();
+
+            // Envoyer le contenu du h1 en tant que réponse
+            res.send(h1Content);
+        })
+        .catch(error => {
+            console.error('Une erreur est survenue lors de la requête :', error);
+            res.status(500).send('Erreur lors de la récupération du contenu de la page Wikipédia.');
+        });
+});
+
+app.listen(port, () => {
+    console.log(`Serveur démarré sur le port ${port}`);
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Récupérer le titre h1 d'un site</title>
+</head>
+<body>
+  <div id="titleContainer">Titre h1 de erwanallot.com : <span id="titleSpan"></span></div>
+
+  <script>
+    // Créer une nouvelle instance de l'objet XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Spécifier la méthode HTTP et l'URL de la requête
+    xhr.open('GET', 'https://www.erwanallot.com/', true);
+
+    // Gérer l'événement de chargement de la requête
+    xhr.onload = function() {
+      // Vérifier le statut de la réponse
+      if (xhr.status >= 200 && xhr.status < 300) {
+        // Extraire le titre du document HTML
+        var parser = new DOMParser();
+        var htmlDoc = parser.parseFromString(xhr.responseText, 'text/html');
+        var title = htmlDoc.querySelector('h1').textContent;
+        // Afficher le titre dans la div
+        document.getElementById('titleSpan').textContent = title;
+      } else {
+        console.error('La requête vers erwanallot.com a échoué :', xhr.status, xhr.statusText);
+      }
+    };
+
+    // Gérer les erreurs lors de la requête
+    xhr.onerror = function() {
+      console.error('Une erreur est survenue lors de la requête vers erwanallot.com.');
+    };
+
+    // Envoyer la requête
+    xhr.send();
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prix de l'action Archos</title>
+</head>
+<body>
+    <h1>Prix de l'action Archos</h1>
+    <div id="prix-action"></div>
+
+    <script>
+        function getPrixAction() {
+            fetch('https://www.boursorama.com/cours/societe/chiffres-cles/1rPALJXR/')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const spanElement = doc.querySelector('.c-instrument[data-ist-last]');
+                    if (spanElement) {
+                        const prixAction = spanElement.textContent.trim();
+                        document.getElementById('prix-action').textContent = `Prix de l'action Archos : ${prixAction}`;
+                    } else {
+                        document.getElementById('prix-action').textContent = "Prix de l'action Archos non disponible";
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération du prix de l\'action Archos :', error);
+                });
+        }
+
+        // Appel initial de la fonction
+        getPrixAction();
+
+        // Actualiser le prix de l'action toutes les minutes
+        setInterval(getPrixAction, 60000); // 60000 millisecondes = 1 minute
+    </script>
+</body>
+</html>
